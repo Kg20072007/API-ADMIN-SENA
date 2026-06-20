@@ -7,59 +7,53 @@ use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return response()->json(Course::all(), 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $course = Course::create([
+            'name' => $request->name,
+            'code' => $request->code, // Código de la ficha (ej: 3393101)
+            'training_center_id' => $request->training_center_id
+        ]);
+
+        return response()->json($course, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Course $course)
     {
-        //
+        return response()->json($course, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Course $course)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Course $course)
     {
-        //
+        $course->update([
+            'name' => $request->name,
+            'code' => $request->code,
+            'training_center_id' => $request->training_center_id
+        ]);
+
+        return response()->json($course, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Course $course)
-    {
-        //
+    public function destroy($id)
+{
+    // Busca el curso por su ID y lo elimina de un solo golpe
+    $course = Course::find();
+
+    if (!$course) {
+        return response()->json([
+            'message' => 'Curso/Ficha no encontrado'
+        ], 404);
     }
+
+    $course->delete();
+
+    return response()->json([
+        'message' => 'Curso/Ficha eliminado correctamente'
+    ], 200);
+}
 }

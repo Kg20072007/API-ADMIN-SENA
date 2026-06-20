@@ -7,19 +7,19 @@ use Illuminate\Http\Request;
 
 class TrainingCenterController extends Controller
 {
-
     public function index()
     {
         return response()->json(TrainingCenter::all(), 200);
     }
+
     public function store(Request $request)
     {
-        $trainingCenter = TrainingCenter::create([
-            'name' => $request->name,
-            'location' => $request->location
+        $center = TrainingCenter::create([
+            'name' => $request->name
+            // Agrega más campos si tu tabla los tiene (ej. 'code' => $request->code)
         ]);
 
-        return response()->json($trainingCenter, 201);
+        return response()->json($center, 201);
     }
 
     public function show(TrainingCenter $trainingCenter)
@@ -30,20 +30,18 @@ class TrainingCenterController extends Controller
     public function update(Request $request, TrainingCenter $trainingCenter)
     {
         $trainingCenter->update([
-            'name' => $request->name,
-            'location' => $request->location
+            'name' => $request->name
         ]);
 
         return response()->json($trainingCenter, 200);
     }
 
-  
-    public function destroy(TrainingCenter $center)
+    public function destroy(TrainingCenter $trainingCenter)
     {
-        $center->delete();
+        $trainingCenter->delete();
 
         return response()->json([
-            'message' => 'Centro eliminado correctamente'
+            'message' => 'Centro de formación eliminado correctamente'
         ], 200);
     }
 }

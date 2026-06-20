@@ -40,7 +40,7 @@ class AreaController extends Controller
         $area->delete();
 
         return response()->json([
-            'mesage' => 'Área eliminada correctamente'
-        ], 200);
+            'mesage' => 'Área eliminada'
+        ])
     }
 }
